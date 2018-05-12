@@ -66,7 +66,7 @@ def cnn_model_fn(features, labels, mode):
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
 
     eval_metric_ops = {
-        "accuracy": tf.metric.accuracy(
+        "accuracy": tf.metrics.accuracy(
             labels=labels, predictions=predictions["classes"]
         )
     }
@@ -93,19 +93,19 @@ def main(unusedargv):
         tensors=tensors_to_log, every_n_iter=50
     )
 
-    # Train the model
-    train_input_fn = tf.estimator.inputs.numpy_input_fn(
-        x={"x": train_data},
-        y=train_labels,
-        batch_size=100,
-        num_epochs=None,
-        shuffle=True
-    )
-    mnist_classifier.train(
-        input_fn=train_input_fn,
-        steps=20000,
-        hooks=[logging_hook]
-    )
+    # # Train the model
+    # train_input_fn = tf.estimator.inputs.numpy_input_fn(
+    #     x={"x": train_data},
+    #     y=train_labels,
+    #     batch_size=100,
+    #     num_epochs=None,
+    #     shuffle=True
+    # )
+    # mnist_classifier.train(
+    #     input_fn=train_input_fn,
+    #     steps=20000,
+    #     hooks=[logging_hook]
+    # )
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
